@@ -40,19 +40,20 @@ export default {
       this.started = true;
       const csvDataHandler = new CsvDataHandler(
         this.encoding,
-        this.outputDeviceName,
         this.decimalPatern,
         this.datePatern
       );
       this.filesComputed = this.files.map(e => {
         return {
-          file: e,
+          file: e.file,
+          output: e.output,
           progress: 0,
           error: false
         };
       });
       for (let idx = 0; idx < this.files.length; idx++) {
-        const element = this.files[idx];
+        const element = this.files[idx].file;
+        const output = this.files[idx].output;
         const id = idx;
         let count = 0;
         // eslint-disable-next-line no-await-in-loop
@@ -60,7 +61,7 @@ export default {
           () => {
             console.log("parse ended", Date.now() - start);
             return csvDataHandler
-              .consumeDataParsed(this.subNetworkId, this.contextId)
+              .consumeDataParsed(this.subNetworkId, this.contextId, output)
               .then(
                 () => {
                   console.log(

@@ -4,15 +4,17 @@
       <md-list-item class="my-hover"
                     v-for="(file, idx) in fileList"
                     :key="idx">
-        <span class="md-list-item-text">{{file.name}}</span>
+        <input
+               class="md-list-item-text input-name"
+               v-model="file.output" />
         <md-button @click="openPreview(file)"
                    v-tooltip="'preview'"
-                   class="md-icon-button md-list-action md-dense md-primary">
+                   class="md-icon-button md-dense md-primary">
           <md-icon class="">pageview</md-icon>
         </md-button>
         <md-button @click="removeitem(idx)"
                    v-tooltip="'Remove File'"
-                   class="md-icon-button md-list-action md-dense md-accent">
+                   class="md-icon-button md-dense md-accent">
           <md-icon class="">cancel</md-icon>
         </md-button>
       </md-list-item>
@@ -22,10 +24,6 @@
         <SelectDecimal class="md-layout-item"
                        v-model="decimalPatern"></SelectDecimal>
       </div>
-      <md-field>
-        <label>Output Device Name</label>
-        <md-input v-model="outputDeviceName"></md-input>
-      </md-field>
       <md-button :disabled="fileList.length === 0"
                  @click="validate"
                  :encoding="encoding"
@@ -43,6 +41,9 @@
                 :datePatern="datePatern"
                 @onDatePaternChange="onDatePaternChange"
                 @closeDialog="onClosePreview"></PreviewCSV>
+
+    <!-- <edit-name-dialog :open="openEditConfirmDialog"
+    @onCloseDialog="editConfirmName"></edit-name-dialog> -->
   </div>
 </template>
 
@@ -51,6 +52,7 @@ import SelectEncoding from "./SelectEncoding.vue";
 import SelectDecimal from "./SelectDecimal.vue";
 import PreviewCSV from "./PreviewCSV.vue";
 import { datePaterns } from "./datePatern.js";
+// import editNameDialog from "./editNameDialog.vue";
 export default {
   name: "stepTwo",
   props: ["files"],
@@ -63,7 +65,7 @@ export default {
       encoding: "UTF-8",
       datePatern: datePaterns[0],
       previewFile: undefined,
-      outputDeviceName: "device"
+      openEditConfirmDialog: false
     };
   },
   computed: {
@@ -75,25 +77,36 @@ export default {
             const element = this.files[idx];
             res.push(element);
           }
+          return res;
         }
         return this.files;
       }
     }
   },
   methods: {
+    editName(file) {
+      file.edit = true;
+      console.log(file);
+
+      // this.openEditConfirmDialog = true;
+      // this.__file = file;
+    },
+    // editConfirmName(name) {
+    //   this.openEditConfirmDialog = false;
+    //   this.$emit("updateNameFile", this.__file, name);
+    // },
     removeitem(idx) {
       this.$emit("removeFile", idx);
     },
     validate() {
       this.$emit("done", {
-        outputDeviceName: this.outputDeviceName,
         decimalPatern: this.decimalPatern,
         datePatern: this.datePatern,
         encoding: this.encoding
       });
     },
     openPreview(file) {
-      this.previewFile = file;
+      this.previewFile = file.file;
       this.openDialogPreview = true;
     },
     onClosePreview() {
@@ -139,4 +152,34 @@ export default {
   white-space: nowrap;
   text-overflow: ellipsis;
 }
+.spinal-import-csv-container-step-two
+  > .md-list
+  > .md-list-item
+  .md-button.md-icon-button {
+  margin: 0;
+}
+.spinal-import-csv-container-step-two
+  > .md-list
+  > .md-list-item
+  input.input-name {
+  background-color: transparent;
+  border: 0;
+  color: white;
+}
+
+.spinal-import-csv-container-step-two
+  > .md-list
+  > .md-list-item
+  input.input-name::-moz-selection { /* Code for Firefox */
+  color: white;
+  background: red;
+}
+.spinal-import-csv-container-step-two
+  > .md-list
+  > .md-list-item
+  input.input-name::selection {
+  color: white;
+  background: red;
+}
+
 </style>

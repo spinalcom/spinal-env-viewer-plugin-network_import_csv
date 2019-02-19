@@ -19,15 +19,15 @@ export default {
   computed: {
     state() {
       if (this.file.error) {
-        return `File '${this.file.file.name}' Error...`;
+        return `File '${this.file.file.name}' to '${this.file.output}' device: Error...`;
       }
       if (this.file.progress === 0) {
-        return `File '${this.file.file.name}' Waiting...`;
+        return `File '${this.file.file.name}' to '${this.file.output}' device: Waiting...`;
       }
       if (this.file.progress === 100) {
-        return `File '${this.file.file.name}' Done...`;
+        return `File '${this.file.file.name}' to '${this.file.output}' device: Done...`;
       }
-      return `File '${this.file.file.name}' Importing...`;
+      return `File '${this.file.file.name}' to '${this.file.output}' device: Importing...`;
     }
   }
 };

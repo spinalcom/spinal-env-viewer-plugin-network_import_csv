@@ -35,6 +35,7 @@ with this file. If not, see
                md-label="File(s) Selection Validation">
         <stepTwo :files="files"
                  @removeFile="removeFile"
+                 @updateNameFile="updateNameFile"
                  @done="onValidationDone"></stepTwo>
 
       </md-step>
@@ -83,10 +84,16 @@ export default {
   methods: {
     onFileSelect(files) {
       this.active = "Validation";
-      this.files = unionBy(this.files, files, "name");
+      this.files = unionBy(this.files, files, "output");
     },
     removeFile(idx) {
       this.files.splice(idx, 1);
+    },
+    updateNameFile(file, name) {
+      for (let idx = 0; idx < this.files.length; idx++) {
+        const element = this.files[idx];
+        if (file === element) file.output = name;
+      }
     },
     onValidationDone(cfg) {
       this.outputDeviceName = cfg.outputDeviceName;

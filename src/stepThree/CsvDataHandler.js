@@ -38,10 +38,9 @@ const spinalServiceTimeseries = new SpinalServiceTimeseries();
 const q = require('q');
 
 export default class CsvDataHandler {
-  constructor(encoding, outputDeviceName, decimalPatern, datePatern) {
+  constructor(encoding, decimalPatern, datePatern) {
     this.dictionary = new Map();
     this.encoding = encoding;
-    this.outputDeviceName = outputDeviceName;
     this.decimalPatern = decimalPatern;
     this.datePatern = datePatern;
     this.dates = [];
@@ -60,9 +59,9 @@ export default class CsvDataHandler {
         return this.handleData(data);
     }
   }
-  consumeDataParsed(subNetworkId, contextId) {
+  consumeDataParsed(subNetworkId, contextId, outputDeviceName) {
     let deferred = q.defer();
-    this.createOrGetDevice(subNetworkId, contextId, this.outputDeviceName).then(
+    this.createOrGetDevice(subNetworkId, contextId, outputDeviceName).then(
       async (device) => {
         const deviceChildren = await SpinalGraphService.getChildrenInContext(
           device.id.get(), contextId);
@@ -127,7 +126,7 @@ export default class CsvDataHandler {
     // create or get endpoint
     for (let idx = 0; idx < deviceChildren.length; idx++) {
       const deviceChild = deviceChildren[idx];
-      if (deviceChild === element.name) {
+      if (deviceChild.name.get() === element.name) {
         return deviceChild;
       }
     }

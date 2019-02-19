@@ -16,7 +16,10 @@ export default {
     onFileSelectChange(files) {
       const res = [];
       for (let idx = 0; idx < files.length; idx++) {
-        res.push(files[idx]);
+        res.push({
+          output: files[idx].name,
+          file: files[idx]
+        });
       }
 
       this.$emit("onFileSelect", res);

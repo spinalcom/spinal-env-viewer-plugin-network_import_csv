@@ -38,11 +38,6 @@ export default {
     async start() {
       const start = Date.now();
       this.started = true;
-      const csvDataHandler = new CsvDataHandler(
-        this.encoding,
-        this.decimalPatern,
-        this.datePatern
-      );
       this.filesComputed = this.files.map(e => {
         return {
           file: e.file,
@@ -52,6 +47,11 @@ export default {
         };
       });
       for (let idx = 0; idx < this.files.length; idx++) {
+        const csvDataHandler = new CsvDataHandler(
+          this.encoding,
+          this.decimalPatern,
+          this.datePatern
+        );
         const element = this.files[idx].file;
         const output = this.files[idx].output;
         const id = idx;

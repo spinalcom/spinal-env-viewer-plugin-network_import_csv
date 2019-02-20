@@ -4,8 +4,7 @@
       <md-list-item class="my-hover"
                     v-for="(file, idx) in fileList"
                     :key="idx">
-        <input
-               class="md-list-item-text input-name"
+        <input class="md-list-item-text input-name"
                v-model="file.output" />
         <md-button @click="openPreview(file)"
                    v-tooltip="'preview'"
@@ -41,9 +40,6 @@
                 :datePatern="datePatern"
                 @onDatePaternChange="onDatePaternChange"
                 @closeDialog="onClosePreview"></PreviewCSV>
-
-    <!-- <edit-name-dialog :open="openEditConfirmDialog"
-    @onCloseDialog="editConfirmName"></edit-name-dialog> -->
   </div>
 </template>
 
@@ -52,7 +48,6 @@ import SelectEncoding from "./SelectEncoding.vue";
 import SelectDecimal from "./SelectDecimal.vue";
 import PreviewCSV from "./PreviewCSV.vue";
 import { datePaterns } from "./datePatern.js";
-// import editNameDialog from "./editNameDialog.vue";
 export default {
   name: "stepTwo",
   props: ["files"],
@@ -86,15 +81,7 @@ export default {
   methods: {
     editName(file) {
       file.edit = true;
-      console.log(file);
-
-      // this.openEditConfirmDialog = true;
-      // this.__file = file;
     },
-    // editConfirmName(name) {
-    //   this.openEditConfirmDialog = false;
-    //   this.$emit("updateNameFile", this.__file, name);
-    // },
     removeitem(idx) {
       this.$emit("removeFile", idx);
     },
@@ -170,7 +157,7 @@ export default {
 .spinal-import-csv-container-step-two
   > .md-list
   > .md-list-item
-  input.input-name::-moz-selection { /* Code for Firefox */
+  input.input-name::-moz-selection {
   color: white;
   background: red;
 }
@@ -181,5 +168,4 @@ export default {
   color: white;
   background: red;
 }
-
 </style>

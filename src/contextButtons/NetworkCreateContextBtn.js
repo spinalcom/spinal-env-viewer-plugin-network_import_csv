@@ -63,4 +63,4 @@ class NetworkCreateContextBtn extends SpinalContextApp {
   }
 }
 
-spinalContextMenuService.registerApp("GraphManagerTopBar", new NetworkCreateContextBtn());
+spinalContextMenuService.registerApp("GraphManagerTopBar", new NetworkCreateContextBtn(), [3]);

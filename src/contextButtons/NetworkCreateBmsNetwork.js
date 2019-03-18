@@ -61,4 +61,4 @@ class NetworkCreateBmsNetwork extends SpinalContextApp {
   }
 }
 
-spinalContextMenuService.registerApp("GraphManagerSideBar", new NetworkCreateBmsNetwork());
+spinalContextMenuService.registerApp("GraphManagerSideBar", new NetworkCreateBmsNetwork(), [3]);

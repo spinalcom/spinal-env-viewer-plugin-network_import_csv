@@ -55,4 +55,4 @@ class NetworkImportBtn extends SpinalContextApp {
   }
 }
 
-spinalContextMenuService.registerApp("GraphManagerSideBar", new NetworkImportBtn());
+spinalContextMenuService.registerApp("GraphManagerSideBar", new NetworkImportBtn(), [3]);
